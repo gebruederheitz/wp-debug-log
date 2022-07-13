@@ -1,6 +1,6 @@
 {
   "name": "@gebruederheitz/wp-debug-log-util",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utilities for the gebruederheitz/wp-debug-log PHP composer package",
   "main": "",
   "engines": {
