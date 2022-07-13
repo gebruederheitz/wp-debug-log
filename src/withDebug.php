@@ -26,6 +26,6 @@ trait withDebug
     {
         $className = explode('\\', static::class);
 
-        return static::$debugNamespace ?: array_pop($className);
+        return static::$debugNamespace ?? array_pop($className);
     }
 }
