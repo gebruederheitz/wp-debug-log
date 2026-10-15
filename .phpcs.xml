@@ -2,6 +2,7 @@
 <ruleset name="Ghwp Custom Standard" namespace="Ghwp\CS\Standard">
 
     <file>./src</file>
+    <file>./tests</file>
     <exclude-pattern type="relative">^__deprecated__</exclude-pattern>
     <arg name="colors"/>
     <rule ref="PSR12">

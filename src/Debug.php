@@ -14,7 +14,7 @@ class Debug
     public static function log(
         string $message = '',
         array $context = [],
-        ?string $namespace = null
+        ?string $namespace = null,
     ): void {
         if (self::isDebug()) {
             $msg = '';
@@ -33,13 +33,10 @@ class Debug
         }
     }
 
-    /**
-     * @param mixed $var
-     */
     public static function dump(
-        $var,
+        mixed $var,
         ?string $message = null,
-        ?string $namespace = null
+        ?string $namespace = null,
     ): void {
         if (self::isDebug()) {
             $msg = '';
@@ -64,20 +61,16 @@ class Debug
      * client: finally always closes the buffer, and the discarding callback
      * covers fatal errors (e.g. a throwing __debugInfo()), after which PHP
      * would otherwise flush the partial dump into the response.
-     *
-     * @param mixed ...$values
      */
-    public static function dumpToString(...$values): string
+    public static function dumpToString(mixed ...$values): string
     {
-        ob_start(static function (): string {
-            return '';
-        });
+        ob_start(static fn(): string => '');
         try {
             foreach ($values as $value) {
                 var_dump($value);
             }
         } catch (Throwable $e) {
-            echo 'Dump failed: ' . get_class($e) . ': ' . $e->getMessage();
+            echo 'Dump failed: ' . $e::class . ': ' . $e->getMessage();
         } finally {
             $dump = (string) ob_get_clean();
         }
