@@ -40,6 +40,11 @@ Debug::log('I\'m logging a context as well now', [$myVariable]);
 // logfile
 Debug::dump($myVariable);
 Debug::dump($myVariable. 'This is my variable, dumped:');
+
+// Captures var_dump() output of one or more values as a string. The output
+// buffer is always closed and discarded, so a failing dump never leaks into
+// the response.
+$dump = Debug::dumpToString($myVariable, $anotherVariable);
 ```
 
 For a more verbose output from different modules, you can use the trait provided,
