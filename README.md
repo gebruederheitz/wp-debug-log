@@ -13,6 +13,9 @@ via composer:
 
 Make sure you have Composer autoload or an alternative class loader present.
 
+Requires PHP >= 8.2. Version 1.x supports PHP >= 7.3, but its `Debug::dump()`
+can leak dumped values into the response when dumping fails.
+
 
 ## Usage
 
@@ -96,7 +99,24 @@ class MyClass {
 
 ### Dependencies
 
- - PHP >= 7.3
+ - [asdf](https://asdf-vm.com/) with the PHP and Node.js versions from
+   `.tool-versions`
  - [Composer 2.x](https://getcomposer.org)
- - [NVM](https://github.com/nvm-sh/nvm) and nodeJS LTS (v16.x)
- - Nice to have: GNU Make (or drop-in alternative)
+ - [go-task](https://taskfile.dev/)
+
+### Tasks
+
+```shell
+# Lint with prettier, phpstan & phpcs (also runs in CI)
+> task lint
+
+# Format all files in src/ and tests/ with prettier
+> task prettier
+
+# Create a tagged release to publish a new version of the package
+> task release
+```
+
+The lock file is resolved for the lowest supported PHP version
+(`config.platform.php` in `composer.json`), so raise that together with the
+`php` requirement.
