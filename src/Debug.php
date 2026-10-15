@@ -78,13 +78,23 @@ class Debug
         return $dump;
     }
 
+    /**
+     * Debug output is enabled when WP_DEBUG is true or when WORDPRESS_ENV is
+     * "development", so it can be switched on explicitly for any environment
+     * (including staging or, temporarily, production).
+     */
     public static function isDebug(): bool
     {
-        return self::isNotProduction();
+        return self::isWpDebugEnabled() || self::isDevelopmentEnvironment();
     }
 
-    private static function isNotProduction(): bool
+    private static function isWpDebugEnabled(): bool
     {
-        return defined('WORDPRESS_ENV') && WORDPRESS_ENV !== 'production';
+        return defined('WP_DEBUG') && WP_DEBUG === true;
+    }
+
+    private static function isDevelopmentEnvironment(): bool
+    {
+        return defined('WORDPRESS_ENV') && WORDPRESS_ENV === 'development';
     }
 }

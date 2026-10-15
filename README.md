@@ -16,13 +16,25 @@ Make sure you have Composer autoload or an alternative class loader present.
 Requires PHP >= 8.2. Version 1.x supports PHP >= 7.3, but its `Debug::dump()`
 can leak dumped values into the response when dumping fails.
 
+### Upgrading from 1.x
+
+1.x logged whenever `WORDPRESS_ENV` was set to anything but `"production"`.
+2.x logs when `WP_DEBUG` is `true` or `WORDPRESS_ENV` is `"development"`, so
+staging instances without `WP_DEBUG` stop logging, and instances with
+`WP_DEBUG` start logging regardless of `WORDPRESS_ENV`.
+
 
 ## Usage
 
 This library uses `error_log()` internally to conditionally write messages to 
 Wordpress' debug log file.
-The single requirement for logging output is that the environment variable
-`WORDPRESS_ENV` is set and does not equal the string `"production"`.
+Output is written when either of these constants is set:
+
+ - `WP_DEBUG` is `true`, which switches logging on for any environment,
+   e.g. temporarily on staging or production
+ - `WORDPRESS_ENV` is `"development"`
+
+`Debug::isDebug()` tells you whether that is the case.
 
 You can call the `Debug` class' static methods directly:
 
@@ -34,8 +46,7 @@ if (Debug::isDebug()) {
     // do dev-instance only things
 }
 
-// Writes the message to the logfile whenever WORDPRESS_ENV is set and not
-// "production"
+// Writes the message to the logfile whenever debug output is enabled
 Debug::log('My first log message');
 Debug::log('I\'m logging a context as well now', [$myVariable]);
 
