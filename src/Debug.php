@@ -14,7 +14,7 @@ class Debug
     public static function log(
         string $message = '',
         array $context = [],
-        string $namespace = null
+        ?string $namespace = null
     ): void {
         if (self::isDebug()) {
             $msg = '';
@@ -38,8 +38,8 @@ class Debug
      */
     public static function dump(
         $var,
-        string $message = null,
-        string $namespace = null
+        ?string $message = null,
+        ?string $namespace = null
     ): void {
         if (self::isDebug()) {
             $msg = '';

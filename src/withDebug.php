@@ -16,7 +16,7 @@ trait withDebug
         Debug::log($message, $context, $namespace);
     }
 
-    protected static function debugDump($var, string $message = null): void
+    protected static function debugDump($var, ?string $message = null): void
     {
         $namespace = self::getNamespace();
         Debug::dump($var, $message, $namespace);
