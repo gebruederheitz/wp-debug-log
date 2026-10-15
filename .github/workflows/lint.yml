@@ -1,0 +1,27 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup languages and tools
+        uses: gebruederheitz/actions/cached-asdf@v1
+        with:
+          setup-task: "true"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Composer Cache
+        uses: gebruederheitz/actions/composer-cache@v1
+
+      - name: Run the linting suite
+        run: task lint
